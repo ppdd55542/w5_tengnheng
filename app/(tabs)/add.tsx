@@ -13,15 +13,18 @@ export default function Add() {
     const [bookName, setBookName] = useState("")
     const [bookPrice, setBookPrice] = useState("")
     const [allBook, setAllBook] = useState<Book[]>([])
-
+// เรียกloaaBook  ทำงานทุกครั้งที่ตัวแปร allBook มีการเปลี่ยนแปลงค่า"
     useEffect(() => {
         loadBook()
     }, [allBook])
-
+// ดึงข้อมูลเก่ามาโชว
     async function loadBook() {
        const data = await AsyncStorage.getItem("book")
+       // สั่งให้ไปหาของ: สั่งให้ระบบไปค้นในลิ้นชักความจำของแอป (AsyncStorage) โดยมองหาลิ้นชักที่แปะป้ายชื่อว่า "book"
        if(data !== null){
             setAllBook(JSON.parse(data))
+                                            //แปลงข้อความ ให้กลับเป็น Array  
+  // s a book   คือการเอาข้อมูลที่แปลงเสร็จแล้ว ไปใส่ในตัวแปร allBook เพื่อให้หน้าจอ React ทำการแสดงผลรายการหนังสือ
        }  
     }
 
@@ -32,10 +35,15 @@ export default function Add() {
             price : bookPrice
         }
         console.log(book)
-
+        // แสดงผล
+        // เช็ค
+// 1
         const newBook = [...allBook, book]
+        // 2
         await AsyncStorage.setItem("book", JSON.stringify(newBook))
+        // เอาของใหม่มาต่อ
         setAllBook(newBook)
+        
 
         setBookName("")
         setBookPrice("")
